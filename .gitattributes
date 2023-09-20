@@ -1,2 +1,37 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+#created below is a covering array, along with another variable that contains value sets - the covering array is compared to the value sets in order to verify the presence of the value sets within the
+#covering array, to make sure that it is indeed a covering array.
+
+#additional notes - t = strength, k = columns, v = values within a specific row x column, N = rows.
+#.combinations generates column sets while .product generates value sets
+
+import itertools
+import random
+
+t = 3
+k = 3
+v = 3
+N = random.randint(1,100)
+
+ca_list = []
+for row in range(N):
+    covering_array = itertools.combinations(range(k), t)
+    ca_list += covering_array
+
+#check_array = list(itertools.product(range(v), repeat=t))
+
+verify_covering_array(ca):
+    for row in covering_array:
+        output = True
+        vals_in_row = tuple(row[col])
+        for col in columns
+            if col in vals_in_row:
+                continue
+            else:
+                output = False
+                break
+        return output
+
+verify_covering_array(ca_list)
