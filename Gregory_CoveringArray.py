@@ -7,38 +7,46 @@
 import itertools
 import random
 
-t = 3
-k = 3
+t = 2
+k = 20
 v = 3
 N = random.randint(1,100)
 
 ca_list = []
 for row in range(N):
-    covering_array = itertools.combinations(range(k), t)
-    ca_list.append(covering_array)
+    #random.choices(range(v), k=k)
+    #covering_array = itertools.combinations(range(k), t)
+    ca_list.append(random.choices(range(v),k=k))
+# print(ca_list)
 
 #check_array = list(itertools.product(range(v), repeat=t))
 
 def verify_covering_array(ca):
     verify = True
-    combos = []
     for columns in itertools.combinations(range(k), t):
-        for values in itertools.product(range(v), repeat = t):
-            assign_name = list(k[col] for col in columns)
-            assign_value = list(v[val] for val in values)
-            combos.append(assign_name, assign_value)
+        #for values in itertools.product(range(v), repeat = t):
+            #assign_name = list(k[col] for col in columns)
+            #assign_value = list(v[val] for val in values)
+        combos = set()
+        for row in ca:
+            assign_name = tuple(row[col] for col in columns)
+            combos.add(assign_name)
+            #assign_name = list(values in columns)
             #vals.append(values)
-            for row in ca:
-                if row in combos:
-                    continue
-                else:
-                    verify = False
+        if len(combos) != v**t:
+            return False
+            
+            # for row in ca:
+            #     if row in combos:
+            #         continue
+            #     else:
+            #         verify = False
     return verify
 
 if verify_covering_array(ca_list):
-    f'Yay, a covering array!'
+    print(f'Yay, a covering array!')
 else: 
-    f'There is an imposter among us!'
+    print(f'There is an imposter among us!')
 
 
 
