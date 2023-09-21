@@ -25,6 +25,7 @@ def rows_of(interaction):
     for row in interaction:
         comp = tuple(row[col] for col in interaction)
         combos.add(comp)
+    return combos
 
 def locating_array_verifier(distinct_col, pair):
     verify = True
