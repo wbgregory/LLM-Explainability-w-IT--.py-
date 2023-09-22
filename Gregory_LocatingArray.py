@@ -10,41 +10,45 @@ k = 5
 v = 3
 N = random.randint(1,100)
 
-#all interactions
-all_cols = itertools.combinations(range(k), t)
-#print(list(all_cols))
-all_vals = itertools.product(range(v), repeat = t)
-#print(list(all_vals))
-interactions = itertools.product(all_cols, all_vals)
-#print(list(interactions))
-d_col = itertools.combinations(interactions, d)
-#print(list(d_col))
+la_list = []
+for row in range(N):
+    la_list.append(random.choices(range(v),k=k))
 
-def rows_of(interaction):
+def rows_of(interaction, locating_array):
     combos = set()
-    for row in interaction:
+    for interaction in locating_array:
         comp = tuple(row[comb] for comb in interaction)
         combos.add(comp)
     return combos
 
 
-def locating_array_verifier(distinct_col, pair):
+def locating_array_verifier(locating_array_list):
+    #all interactions
+    all_cols = itertools.combinations(range(k), t)
+    #print(list(all_cols))
+    all_vals = itertools.product(range(v), repeat = t)
+    #print(list(all_vals))
+    interactions = itertools.product(all_cols, all_vals)
+    #print(list(interactions))
+    d_col = itertools.combinations(interactions, d)
+    #print(list(d_col))
     verify = True
-    for I1, I2 in itertools.combinations(distinct_col, pair):
-        rows1 = rows_of(I1)
-        rows2 = rows_of(I2)
+    for I1, I2 in itertools.combinations(d_col, 2):
+        rows1 = rows_of(I1, locating_array_list)
+        rows2 = rows_of(I2, locating_array_list)
         if rows1 == rows2:
             return False
-    return verify
+    if verify_covering_array(locating_array_list):
+        return verify
+    else: 
+        verify = False
+        return verify
 
-if locating_array_verifier(d_col, 2):
-    verify_covering_array(d_col)
-    if verify_covering_array:
-        print(f'This is a locating array!')
-    else:
-        print(f'This is not a locating array.')
+if locating_array_verifier(la_list):
+    print(f'This is a locating array!')
 else:
     print(f'This is not a locating array.')
+
 
 
 
