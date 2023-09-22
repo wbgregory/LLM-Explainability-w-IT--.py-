@@ -16,11 +16,10 @@ for row in range(N):
 
 def rows_of(interaction, locating_array):
     combos = set()
-    for interaction in locating_array:
+    for row in locating_array:
         comp = tuple(row[comb] for comb in interaction)
         combos.add(comp)
     return combos
-
 
 def locating_array_verifier(locating_array_list):
     #all interactions
