@@ -23,9 +23,10 @@ d_col = itertools.combinations(interactions, d)
 def rows_of(interaction):
     combos = set()
     for row in interaction:
-        comp = tuple(row[col] for col in interaction)
+        comp = tuple(row[comb] for comb in interaction)
         combos.add(comp)
     return combos
+
 
 def locating_array_verifier(distinct_col, pair):
     verify = True
