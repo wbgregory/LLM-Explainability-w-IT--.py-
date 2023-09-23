@@ -17,8 +17,10 @@ for row in range(N):
 def rows_of(interaction, locating_array):
     combos = set()
     for row in locating_array:
-        comp = tuple(row[comb] for comb in interaction)
+        comp = tuple(row[col, val] for col, val in interaction)
         combos.add(comp)
+    #for val in combos:
+        #if comp[val] == row:
     return combos
 
 def locating_array_verifier(locating_array_list):
@@ -31,17 +33,12 @@ def locating_array_verifier(locating_array_list):
     #print(list(interactions))
     d_col = itertools.combinations(interactions, d)
     #print(list(d_col))
-    verify = True
     for I1, I2 in itertools.combinations(d_col, 2):
         rows1 = rows_of(I1, locating_array_list)
         rows2 = rows_of(I2, locating_array_list)
         if rows1 == rows2:
             return False
-    if verify_covering_array(locating_array_list):
-        return verify
-    else: 
-        verify = False
-        return verify
+    return verify_covering_array(locating_array_list)
 
 if locating_array_verifier(la_list):
     print(f'This is a locating array!')
