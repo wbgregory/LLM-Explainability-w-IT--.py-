@@ -8,7 +8,7 @@ d = 1
 t = 3
 k = 5
 v = 3
-N = random.randint(1,100)
+N = random.randint(200,300)
 
 la_list = []
 for row in range(N):
@@ -16,11 +16,15 @@ for row in range(N):
 
 def rows_of(interaction, locating_array):
     combos = set()
+    #print(interaction)
+    columns = interaction[0]
+    values = interaction[1]
+    idx = 0
     for row in locating_array:
-        comp = tuple(row[col, val] for col, val in interaction)
-        combos.add(comp)
-    #for val in combos:
-        #if comp[val] == row:
+        vals_in_row = tuple(row[col] for col in columns)
+        if vals_in_row == values:
+            combos.add(idx)
+        idx += 1
     return combos
 
 def locating_array_verifier(locating_array_list):
@@ -33,9 +37,13 @@ def locating_array_verifier(locating_array_list):
     #print(list(interactions))
     d_col = itertools.combinations(interactions, d)
     #print(list(d_col))
-    for I1, I2 in itertools.combinations(d_col, 2):
-        rows1 = rows_of(I1, locating_array_list)
-        rows2 = rows_of(I2, locating_array_list)
+    for dset1, dset2 in itertools.combinations(d_col, 2):
+        rows1 = set()
+        for I1 in dset1:
+            rows1 = rows1.union(rows_of(I1, locating_array_list))
+        rows2 = set()
+        for I2 in dset2:
+            rows2 = rows2.union(rows_of(I2, locating_array_list))
         if rows1 == rows2:
             return False
     return verify_covering_array(locating_array_list)
