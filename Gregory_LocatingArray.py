@@ -8,7 +8,7 @@ d = 1
 t = 3
 k = 5
 v = 3
-N = random.randint(200,300)
+N = 10
 
 la_list = []
 for row in range(N):
@@ -53,6 +53,16 @@ if locating_array_verifier(la_list):
 else:
     print(f'This is not a locating array.')
 
+while verify_covering_array != True:
+    N *= 2
+    la_list = []
+    for row in range(N):
+        la_list.append(random.choices(range(v),k=k))
+
+if locating_array_verifier(la_list):
+    print(f'This is a locating array!')
+else:
+    print(f'This is not a locating array.')
 
 
 
