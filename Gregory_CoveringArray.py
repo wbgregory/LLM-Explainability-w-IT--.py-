@@ -6,24 +6,29 @@
 
 import itertools
 import random
+import math
+
+vs = [2,3,4,5,6]
+
 
 t = 2
-k = 20
-v = 3
+k = len(vs)
 N = random.randint(1,100)
 
 ca_list = []
 for row in range(N):
-    ca_list.append(random.choices(range(v),k=k))
+    ca_list.append(random.choices(range(vs),k=k))
 
 def verify_covering_array(ca):
     verify = True
     for columns in itertools.combinations(range(k), t):
+        num_vals = tuple(vs[col] for col in columns)
+        product = math.prod(num_vals)
         combos = set()
         for row in ca:
             comp = tuple(row[col] for col in columns)
             combos.add(comp)
-        if len(combos) != v**t:
+        if len(combos) != product:
             return False
     return verify
 

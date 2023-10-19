@@ -53,11 +53,23 @@ if locating_array_verifier(la_list):
 else:
     print(f'This is not a locating array.')
 
-while verify_covering_array != True:
+while locating_array_verifier(la_list) != True:
     N *= 2
     la_list = []
     for row in range(N):
         la_list.append(random.choices(range(v),k=k))
+
+#while verify_covering_array != True:
+    #N += 1
+    #la_list = []
+    #for row in range(N):
+        #la_list.append(random.choices(range(v),k=k))
+
+#while verify_covering_array != True:
+    #N *= 2
+    #la_list = []
+    #for row in range(N):
+        #la_list.append(random.choices(range(v),k=k))
 
 if locating_array_verifier(la_list):
     print(f'This is a locating array!')
