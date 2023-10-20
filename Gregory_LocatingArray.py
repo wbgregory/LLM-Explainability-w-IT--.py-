@@ -1,22 +1,13 @@
-#Locating Array Verifier
+# Locating Array Verifier
 
 import random
 import itertools
 from Gregory_CoveringArray import verify_covering_array
 
-d = 1
-t = 3
-k = 5
-v = 3
-N = 10
-
-la_list = []
-for row in range(N):
-    la_list.append(random.choices(range(v),k=k))
 
 def rows_of(interaction, locating_array):
     combos = set()
-    #print(interaction)
+    # print(interaction)
     columns = interaction[0]
     values = interaction[1]
     idx = 0
@@ -27,16 +18,26 @@ def rows_of(interaction, locating_array):
         idx += 1
     return combos
 
-def locating_array_verifier(locating_array_list):
-    #all interactions
-    all_cols = itertools.combinations(range(k), t)
-    #print(list(all_cols))
-    all_vals = itertools.product(range(v), repeat = t)
-    #print(list(all_vals))
-    interactions = itertools.product(all_cols, all_vals)
-    #print(list(interactions))
+
+def locating_array_verifier(locating_array_list, t, vs, d):
+    # all interactions
+    all_cols = itertools.combinations(range(len(vs)), t)
+    # print(list(all_cols))
+    interactions = []
+    for col_set in all_cols:
+        rng = []
+        for v in tuple(vs[col] for col in col_set):
+            rng.append(range(v))
+        all_vals = itertools.product(*rng)
+        for val_set in all_vals:
+            interactions.append((col_set, val_set))
+
+    # all_vals = itertools.product(range(v), repeat = t)
+    # print(list(all_vals))
+    # interactions = itertools.product(all_cols, all_vals)
+    # print(list(interactions))
     d_col = itertools.combinations(interactions, d)
-    #print(list(d_col))
+    # print(list(d_col))
     for dset1, dset2 in itertools.combinations(d_col, 2):
         rows1 = set()
         for I1 in dset1:
@@ -46,37 +47,47 @@ def locating_array_verifier(locating_array_list):
             rows2 = rows2.union(rows_of(I2, locating_array_list))
         if rows1 == rows2:
             return False
-    return verify_covering_array(locating_array_list)
+    return verify_covering_array(locating_array_list, t, vs)
 
-if locating_array_verifier(la_list):
-    print(f'This is a locating array!')
-else:
-    print(f'This is not a locating array.')
 
-while locating_array_verifier(la_list) != True:
-    N *= 2
+if __name__ == '__main__':
+    d = 1
+    t = 3
+    k = 5
+    v = 3
+    N = 10
+
     la_list = []
     for row in range(N):
-        la_list.append(random.choices(range(v),k=k))
+        la_list.append(random.choices(range(v), k=k))
 
-#while verify_covering_array != True:
-    #N += 1
-    #la_list = []
-    #for row in range(N):
-        #la_list.append(random.choices(range(v),k=k))
+    if locating_array_verifier(la_list):
+        print(f'This is a locating array!')
+    else:
+        print(f'This is not a locating array.')
 
-#while verify_covering_array != True:
-    #N *= 2
-    #la_list = []
-    #for row in range(N):
-        #la_list.append(random.choices(range(v),k=k))
+    while locating_array_verifier(la_list) != True:
+        N *= 2
+        la_list = []
+        for row in range(N):
+            la_list.append(random.choices(range(v), k=k))
 
-if locating_array_verifier(la_list):
-    print(f'This is a locating array!')
-else:
-    print(f'This is not a locating array.')
+# while verify_covering_array != True:
+    # N += 1
+    # la_list = []
+    # for row in range(N):
+    # la_list.append(random.choices(range(v),k=k))
 
+# while verify_covering_array != True:
+    # N *= 2
+    # la_list = []
+    # for row in range(N):
+    # la_list.append(random.choices(range(v),k=k))
 
+    # if locating_array_verifier():
+    #     print(f'This is a locating array!')
+    # else:
+    #     print(f'This is not a locating array.')
 
 
 # t = 3
@@ -119,20 +130,7 @@ else:
 # for check in range(verifier):
 #    if verifier.count(check) > 1:
 #       f'This cannot be a locating array!'
-#    else: 
+#    else:
 #       continue
 
-#add back in covering array verifier to then test the locating array for covering property
-
-
-      
-
-
-    
-
-
-
-
-
-
-
+# add back in covering array verifier to then test the locating array for covering property

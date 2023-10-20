@@ -1,27 +1,17 @@
-#created below is a covering array, along with another variable that contains value sets - the covering array is compared to the value sets in order to verify the presence of the value sets within the
-#covering array, to make sure that it is indeed a covering array.
+# created below is a covering array, along with another variable that contains value sets - the covering array is compared to the value sets in order to verify the presence of the value sets within the
+# covering array, to make sure that it is indeed a covering array.
 
-#additional notes - t = strength, k = columns, v = values within a specific row x column, N = rows.
-#.combinations generates column sets while .product generates value sets
+# additional notes - t = strength, k = columns, v = values within a specific row x column, N = rows.
+# .combinations generates column sets while .product generates value sets
 
 import itertools
 import random
 import math
 
-vs = [2,3,4,5,6]
 
-
-t = 2
-k = len(vs)
-N = random.randint(1,100)
-
-ca_list = []
-for row in range(N):
-    ca_list.append(random.choices(range(vs),k=k))
-
-def verify_covering_array(ca):
+def verify_covering_array(ca, t, vs):
     verify = True
-    for columns in itertools.combinations(range(k), t):
+    for columns in itertools.combinations(range(len(vs)), t):
         num_vals = tuple(vs[col] for col in columns)
         product = math.prod(num_vals)
         combos = set()
@@ -32,27 +22,35 @@ def verify_covering_array(ca):
             return False
     return verify
 
-if verify_covering_array(ca_list):
-    print(f'Yay, a covering array!')
-else: 
-    print(f'There is an imposter among us!')
 
+if __name__ == '__main__':
+    vs = [2, 3, 4, 5, 6]
 
+    t = 2
+    k = len(vs)
+    N = random.randint(1, 100)
 
+    ca_list = []
+    for row in range(N):
+        ca_list.append(random.choices(range(vs), k=k))
 
+    if verify_covering_array(ca_list):
+        print(f'Yay, a covering array!')
+    else:
+        print(f'There is an imposter among us!')
 
-    #for row in covering_array:
-        #output = True
-        #vals_in_row = tuple(row[col])
-        #for col in columns
-            #if col in vals_in_row:
-                #continue
-            #else:
-                #output = False
-                #break
-        #return output
+    # for row in covering_array:
+        # output = True
+        # vals_in_row = tuple(row[col])
+        # for col in columns
+        # if col in vals_in_row:
+        # continue
+        # else:
+        # output = False
+        # break
+        # return output
 
-#verify_covering_array(ca_list)
+# verify_covering_array(ca_list)
 
 # ca_list = []
 # for row in range(N):
@@ -77,7 +75,7 @@ else:
 #             #vals.append(values)
 #         if len(combos) != v**t:
 #             return False
-            
+
 #             # for row in ca:
 #             #     if row in combos:
 #             #         continue
@@ -87,5 +85,5 @@ else:
 
 # if verify_covering_array(ca_list):
 #     print(f'Yay, a covering array!')
-# else: 
+# else:
 #     print(f'There is an imposter among us!')
