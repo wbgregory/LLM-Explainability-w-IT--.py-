@@ -19,6 +19,7 @@ def verify_covering_array(ca, t, vs):
             comp = tuple(row[col] for col in columns)
             combos.add(comp)
         if len(combos) != product:
+            # print(columns)
             return False
     return verify
 

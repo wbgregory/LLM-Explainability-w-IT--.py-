@@ -20,9 +20,10 @@ def rows_of(interaction, locating_array):
 
 
 def locating_array_verifier(locating_array_list, t, vs, d):
-    # all interactions
+    # print(locating_array_list)
+    if not verify_covering_array(locating_array_list, t, vs):
+        return False
     all_cols = itertools.combinations(range(len(vs)), t)
-    # print(list(all_cols))
     interactions = []
     for col_set in all_cols:
         rng = []
@@ -31,23 +32,27 @@ def locating_array_verifier(locating_array_list, t, vs, d):
         all_vals = itertools.product(*rng)
         for val_set in all_vals:
             interactions.append((col_set, val_set))
-
-    # all_vals = itertools.product(range(v), repeat = t)
-    # print(list(all_vals))
-    # interactions = itertools.product(all_cols, all_vals)
-    # print(list(interactions))
+    rows_dict = dict()
     d_col = itertools.combinations(interactions, d)
-    # print(list(d_col))
     for dset1, dset2 in itertools.combinations(d_col, 2):
-        rows1 = set()
-        for I1 in dset1:
-            rows1 = rows1.union(rows_of(I1, locating_array_list))
-        rows2 = set()
-        for I2 in dset2:
-            rows2 = rows2.union(rows_of(I2, locating_array_list))
+        if dset1 in rows_dict:
+            rows1 = rows_dict[dset1]
+        else:
+            rows1 = set()
+            for I1 in dset1:
+                rows1 = rows1.union(rows_of(I1, locating_array_list))
+            rows_dict[dset1] = rows1
+        if dset2 in rows_dict:
+            rows2 = rows_dict[dset2]
+        else:
+            rows2 = set()
+            for I2 in dset2:
+                rows2 = rows2.union(rows_of(I2, locating_array_list))
+            rows_dict[dset2] = rows2
         if rows1 == rows2:
+            print(dset1, dset2)
             return False
-    return verify_covering_array(locating_array_list, t, vs)
+    return True
 
 
 if __name__ == '__main__':
