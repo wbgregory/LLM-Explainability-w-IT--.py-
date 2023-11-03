@@ -7,19 +7,23 @@
 import itertools
 import random
 import math
+import collections
 
 
-def verify_covering_array(ca, t, vs):
+def verify_covering_array(ca, t, vs, lamb):
     verify = True
     for columns in itertools.combinations(range(len(vs)), t):
         num_vals = tuple(vs[col] for col in columns)
         product = math.prod(num_vals)
-        combos = set()
+        combos = collections.Counter()
         for row in ca:
             comp = tuple(row[col] for col in columns)
-            combos.add(comp)
+            combos[comp] += 1
+            # combos.add(comp)
+        m = min(combos.values())
+        if m < lamb:
+            return False
         if len(combos) != product:
-            # print(columns)
             return False
     return verify
 

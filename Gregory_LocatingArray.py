@@ -19,16 +19,17 @@ def rows_of(interaction, locating_array):
     return combos
 
 
-def locating_array_verifier(locating_array_list, t, vs, d):
+def locating_array_verifier(locating_array_list, t, vs, d, n_syns, lamb):
     # print(locating_array_list)
-    if not verify_covering_array(locating_array_list, t, vs):
+    if not verify_covering_array(locating_array_list, t, vs, lamb):
         return False
     all_cols = itertools.combinations(range(len(vs)), t)
     interactions = []
     for col_set in all_cols:
         rng = []
-        for v in tuple(vs[col] for col in col_set):
-            rng.append(range(v))
+        # for v in tuple(vs[col] for col in col_set):
+        for col in col_set:
+            rng.append(n_syns[col])
         all_vals = itertools.product(*rng)
         for val_set in all_vals:
             interactions.append((col_set, val_set))
@@ -49,7 +50,7 @@ def locating_array_verifier(locating_array_list, t, vs, d):
             for I2 in dset2:
                 rows2 = rows2.union(rows_of(I2, locating_array_list))
             rows_dict[dset2] = rows2
-        if rows1 == rows2:
+        if len(rows1.symmetric_difference(rows2)) < lamb:
             print(dset1, dset2)
             return False
     return True
