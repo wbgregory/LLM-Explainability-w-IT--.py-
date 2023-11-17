@@ -78,6 +78,10 @@ if __name__ == '__main__':
         for row in range(N):
             la_list.append(random.choices(range(v), k=k))
 
+
+# extra lines of code
+
+
 # while verify_covering_array != True:
     # N += 1
     # la_list = []

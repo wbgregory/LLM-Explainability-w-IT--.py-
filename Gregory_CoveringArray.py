@@ -44,6 +44,9 @@ if __name__ == '__main__':
     else:
         print(f'There is an imposter among us!')
 
+
+# additional lines of code
+
     # for row in covering_array:
         # output = True
         # vals_in_row = tuple(row[col])
