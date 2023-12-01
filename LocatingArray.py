@@ -2,7 +2,7 @@
 
 import random
 import itertools
-from Gregory_CoveringArray import verify_covering_array
+from CoveringArray import verify_covering_array
 
 
 def rows_of(interaction, locating_array):
